@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('produto', function (Blueprint $table){
@@ -16,18 +13,17 @@ return new class extends Migration
             $table->string('nome')->default('');
             $table->string('sku')->default('');
             $table->string('unidade_medida')->default('');
-            $table->bigInteger('categoria_id')->index;
+            $table->decimal('valor', 8, 2)->default(0);
+            $table->integer('quantidade_estoque')->default(0);
+            $table->enum('categoria', ['-', 'Eletrônicos', 'Roupas', 'Alimentos', 'Móveis', 'Beleza']);
             $table->timestamps();
             $table->softDeletes();
         }
         );
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('produto');
     }
 };
